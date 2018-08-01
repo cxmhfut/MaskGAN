@@ -76,8 +76,7 @@ def create_generator(hparams,
             is_validating=is_validating,
             reuse=reuse)
     elif FLAGS.generator_model == 'rnn_zaremba':
-        (sequence, logits, log_probs, initial_state,
-         final_state) = rnn_zaremba.generator(
+        (sequence, logits, log_probs, initial_state, final_state) = rnn_zaremba.generator(
             hparams,
             inputs,
             targets,
@@ -86,8 +85,7 @@ def create_generator(hparams,
             is_validating=is_validating,
             reuse=reuse)
     elif FLAGS.generator_model == 'seq2seq':
-        (sequence, logits, log_probs, initial_state,
-         final_state) = seq2seq.generator(
+        (sequence, logits, log_probs, initial_state, final_state) = seq2seq.generator(
             hparams,
             inputs,
             targets,

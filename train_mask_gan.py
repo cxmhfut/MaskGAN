@@ -74,8 +74,8 @@ MODE_VALIDATION = 'VALIDATION'
 MODE_TEST = 'TEST'
 
 ## Binary and setup FLAGS.
-tf.app.flags.DEFINE_enum(
-    'mode', 'TRAIN', [MODE_TRAIN, MODE_VALIDATION, MODE_TEST, MODE_TRAIN_EVAL],
+tf.app.flags.DEFINE_string(
+    'mode', 'TRAIN',
     'What this binary will do.')
 tf.app.flags.DEFINE_string('master', '',
                            """Name of the TensorFlow master to use.""")
@@ -266,23 +266,23 @@ def create_MaskGAN(hparams, is_training):
 
     ## Fakse Sequence from the Generator.
     # TODO(adai):  Generator must have IMDB labels placeholder.
-    (fake_sequence, fake_logits, fake_log_probs, fake_gen_initial_state,
-     fake_gen_final_state, _) = model_construction.create_generator(
-        hparams,
-        inputs,
-        targets,
-        present,
-        is_training=is_training,
-        is_validating=False)
-    (_, eval_logits, _, eval_initial_state, eval_final_state,
-     _) = model_construction.create_generator(
-        hparams,
-        inputs,
-        targets,
-        present,
-        is_training=False,
-        is_validating=True,
-        reuse=True)
+    (fake_sequence, fake_logits, fake_log_probs, fake_gen_initial_state, fake_gen_final_state, _) = \
+        model_construction.create_generator(
+            hparams,
+            inputs,
+            targets,
+            present,
+            is_training=is_training,
+            is_validating=False)
+    (_, eval_logits, _, eval_initial_state, eval_final_state, _) = \
+        model_construction.create_generator(
+            hparams,
+            inputs,
+            targets,
+            present,
+            is_training=False,
+            is_validating=True,
+            reuse=True)
 
     ## Discriminator.
     fake_predictions = model_construction.create_discriminator(
@@ -303,7 +303,9 @@ def create_MaskGAN(hparams, is_training):
     # The critic will be used to estimate the forward rewards to the Generator.
     if FLAGS.baseline_method == 'critic':
         est_state_values = model_construction.create_critic(
-            hparams, fake_sequence, is_training=is_training)
+            hparams,
+            fake_sequence,
+            is_training=is_training)
     else:
         est_state_values = None
 

@@ -312,7 +312,12 @@ def generator(hparams,
     """Define the Generator graph."""
     with tf.variable_scope('gen', reuse=reuse):
         encoder_states, initial_state, final_state = gen_encoder(
-            hparams, inputs, targets_present, is_training=is_training, reuse=reuse)
+            hparams,
+            inputs,
+            targets_present,
+            is_training=is_training,
+            reuse=reuse)
+
         stacked_sequence, stacked_logits, stacked_log_probs = gen_decoder(
             hparams,
             inputs,

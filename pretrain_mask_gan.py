@@ -75,8 +75,10 @@ def pretrain_generator(sv, sess, model, data, log, id_to_word,
 
             [losses, cost_eval, _, step] = sess.run(
                 [
-                    model.fake_cross_entropy_losses, model.avg_log_perplexity,
-                    model.gen_pretrain_op, model.global_step
+                    model.fake_cross_entropy_losses,
+                    model.avg_log_perplexity,
+                    model.gen_pretrain_op,
+                    model.global_step
                 ],
                 feed_dict=pretrain_feed)
 
